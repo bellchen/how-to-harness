@@ -1,31 +1,32 @@
 ---
 name: how-to-harness
-description: A structured facilitation framework that guides users from a vague idea to a concrete, decision-locked design document — for complex AI systems, self-optimizing pipelines, agent loops, governance systems, evaluation frameworks, or any "human-steer + agent-execute" architecture. Use this skill whenever the user wants to design a multi-step / multi-agent / closed-loop system (Harness Engineering, Ralph loops, LLM-as-judge systems, gatekeeper workflows, self-optimizing pipelines, evaluation-driven improvement, etc.), or whenever the user says things like "help me think this through", "我有个想法但还不清楚", "帮我设计 XX 系统", "把我这个点子变成方案", "how should I architect this", "帮我把需求理清楚", "帮我写个 PRD/RFC/技术方案/设计文档", especially when the topic involves agent autonomy, evaluation harnesses, steering/gating mechanisms, or closed-loop automation. This skill is self-contained — it internalizes Socratic brainstorming discipline and final-document schemas (PRD/RFC/Design Doc/Kickoff plan), so it does not delegate to other skills. The final deliverable is tailored to the user's real need (PRD / Design Doc / RFC / Kickoff checklist / Milestones / Decision Log / One-Pager), not a fixed format.
+description: A domain-specific facilitation framework for designing Harness-style closed-loop, self-optimizing, human-steer+agent-execute systems — Ralph loops, LLM-as-judge harnesses, evaluation-driven improvement pipelines, tiered-automation governance, gatekeeper workflows, AI agent autonomy systems, or any architecture where agents execute and humans steer through gates. Use this skill whenever the user says things like "帮我设计一个 AI 闭环 / 自优化系统"、"Ralph loop"、"Harness Engineering"、"评测驱动的改进回路"、"LLM-as-judge 体系"、"闸门分级 / 熔断 / 升级路径"、"自治治理 Agent系统"、"设计自执行但人类掌舵的系统", or when the topic explicitly involves agent autonomy, evaluation harnesses, steering/gating mechanisms, idempotent/resumable loops, tiered automation with escalation, or closed-loop improvement. This skill is fully self-contained: it internalizes Socratic brainstorming discipline + mainstream design-document schemas + Harness methodology hard constraints (Eval-first, Gates-not-code, Idempotent & resumable loops, Small reversible steps, Automation tiers with escalation, Asset versioning, Human time budget as first-class constraint) as non-negotiable checks on every decision. The final deliverable is tailored to the user's real need (PRD / Design Doc / RFC / Kickoff checklist / ADR / One-Pager), not a fixed format.
 ---
 
-# How to Harness · 从模糊想法到锁定设计的结构化引导框架
+# How to Harness · 闭环 / 自优化系统的设计引导框架
 
-> **核心思想**：好的设计文档不是"坐下来写"，而是"先引导用户锁定决策，再按消费者需求组织产出"。本 skill 把这个过程显式化为一个**自给自足、可重复**的 4 层方法论。
+> **核心思想**："Humans steer, agents execute." 在闭环 / 自优化类系统里，仅有 Socratic 提问纪律还不够——用户会把决策锁死在**违反 Harness 方法论的位置**。本 skill 在常规的设计引导之上额外叠加一层**硬性领域约束**，确保所有决策都对齐 Harness Engineering 的核心原则。
 
-本 skill 的灵感来自 OpenAI 的 [Harness Engineering](https://openai.com/index/harness-engineering/) —— "Humans steer, agents execute"。同样的哲学放到"做设计"这件事上：**用户掌舵（做决策），Agent 执行（组织与书写）**。
+本 skill 来源于 OpenAI 的 [Harness Engineering](https://openai.com/index/harness-engineering/) 方法论。
 
-**本 skill 完全自给自足**：内化了 Socratic brainstorming 纪律 + 主流设计文档的 schema 知识，不依赖其他 skill。
+**本 skill 完全自给自足**：内化了 Socratic brainstorming 纪律 + 主流设计文档的 schema 知识 + Harness 方法论的全部硬约束，不依赖其他 skill。
 
 ---
 
 ## 何时使用（When to trigger）
 
-用户的需求有以下任一特征时，使用本 skill：
+仅当用户的系统有以下**核心特征之一**时才使用本 skill：
 
-- 想设计一个**自循环 / 自优化**的系统（Agent loop / Ralph loop / CI 式评测）
-- 想设计一个**人机协作**的治理结构（谁审批什么、什么情况升级）
-- 想设计一个**评测驱动**的改进回路（Gold Set、回归测试、LLM-as-judge）
-- 说"我有个想法"、"帮我想明白"、"帮我把这事理清楚"
-- 提到 Harness Engineering / Ralph / Agent / 自治 / 闭环 / 治理 / 评测
-- 想要 PRD / RFC / 技术方案 / 设计文档 / Kickoff 清单 / 里程碑规划 中的任一种
-- 发现关键决策还未锁定（触发条件、升级策略、评测标准、角色边界等模糊）
+- 系统存在**闭环 / 自优化**结构（Agent loop / Ralph loop / CI 式评测循环 / 周期性自改进）
+- 系统存在明确的**人机协作闸门**（分级自动化 L1/L2/L3、谁审批什么、什么情况升级到人）
+- 系统以**评测驱动**（Gold Set、回归测试、LLM-as-judge、硬门禁 / 软评估）
+- 用户提到 Harness Engineering / Ralph loop / LLM-as-judge / gatekeeper / 闭环 / 自治 / agent autonomy / 熔断升级路径
 
-**反过来**：如果用户只是想把**已经想清楚的东西**按固定格式（比如纯 CRUD 需求文档）记录下来，不需要本 skill 的引导深度，可以直接按常规文档模板写。
+**不适用场景**：
+- 系统不涉及自改进循环（比如普通产品功能 / 内部工具 / 平台改造 / API / 数据模型 / 工作流 / 一次性的对话 / 问答功能）
+- 已经想清楚的纯 CRUD 需求文档
+
+**判定钥匙**：问一个关键问题——"这个系统会不会自己执行自己改进自己？"如果答案不是"会"，本 skill 就不适用。
 
 ---
 
@@ -47,19 +48,74 @@ description: A structured facilitation framework that guides users from a vague 
 
 ---
 
-## 核心方法论：4 层叠加框架
+## 核心方法论：5 层叠加框架
 
 ```
+Layer 0: Harness Principles（领域硬约束，不可协商）
+   ↓
 Layer 1: 用户提供的约束（方法论锚点 + 业务现状）
    ↓
-Layer 2: Brainstorming 纪律（先问再写、分层展开、决策锁定）← 已内化
+Layer 2: Brainstorming 纪律（已内化）
    ↓
-Layer 3: Socratic 追问（A/B/C/D 选项 + 依赖拓扑 + 一致性校验）
+Layer 3: Socratic 追问（A/B/C/D 选项 + 依赖拓扑 + **4 项**一致性校验）
    ↓
 Layer 4: 产物组织（按消费者选 schema，详见 references/deliverables.md）
 ```
 
+**Layer 0 是本 skill 最核心的领域层**：它让每一轮 Socratic 追问都以 Harness 原则为尺子，而不仅仅是"问得清楚"。
+
 每一层都不能跳过，但强度可以按任务复杂度调节。
+
+---
+
+## Layer 0：Harness Principles（领域硬约束）
+
+这是本 skill 的**核心领域层**。以下 7 条原则在每一轮 Socratic 追问时都被强制检查，任何决策若违反这些原则都要被指出（用户可以选择接受违反，但必须是知情违反）。
+
+### HP-1 · Eval is foundation（评测是地基，不是可选项）
+任何改进循环**先建评测集（Gold Set）**。没有评测的循环不能自动改。
+- 不要问用户"要不要有 Gold Set"——直接问"Gold Set 从哪来"（人工标注 / 规则自动提名 / 历史高质量样本）
+- 如果用户说"我们现在没有，先上线再说"→ 拦住，先解决冷启动评测集来源。
+
+### HP-2 · Humans steer via gates, not via code（人类用闸门掌舵，不是亲自改代码）
+人类的角色是**定义闸门 / 审批闸门 / 调整闸门**，不是亲自下场改代码 / Prompt / 数据。
+- 闸门分级必须明确：L1 自动 / L2 Owner 审 / L3 Manager 审 / 红线熔断
+- 每个闸门要有超时策略（多久没人审自动做什么）
+- 每个闸门要有升级路径（未通过时升到哪里）
+
+### HP-3 · Loops must be idempotent & resumable（循环必须幂等、断点可续）
+循环的任何一步**跑执行两遍不能造成不同结果**，中途中断可以从断点恢复。
+- 问：纯垂直执行的每一步都支持重跑吗？来源数据有一致的 ID 吗？中间态存哪里？
+- 违反信号：用户说"每次跑结果不一样也行"——硬扛拦住，解释为什么不行。
+
+### HP-4 · Small, reversible steps（改动小、可观察、可回滚）
+自动改进的每一步要**粒度小 · 有观察期 · 失败可自动回滚**。
+- 问：改进粒度是什么（一条 Prompt / 一个子模块 / 整个 Skill）？观察期多长？回滚的触发条件？
+- 违反信号：用户说"改完直接上线"——追问弱一致性 / 影响爆炸半径。
+
+### HP-5 · Automation tiers with clear escalation（分级自动化 + 清晰升级路径）
+自动化**不是 0/1 开关**，是 L1/L2/L3 分档。每个档有清晰的权限边界与升级触发条件。
+- 问：有几级自动化？每级的权限边界？哪些事件触发从 L1 升到 L2？
+- 常用模版：L1 自动合入 · L2 Owner 审批 · L3 Manager 审批 · 红线直接熔断。
+
+### HP-6 · Asset versioning（演化资产必须版本化）
+循环演化的资产（Skill / Prompt / Knowledge / Rules）必须有**可追溯的版本历史**，任一版本能单独回滚。
+- 问：用 git / 数据库版本 / 快照？三个月后"是谁改的"、"为什么改"、"能不能回到昔日版本"能回答吗？
+
+### HP-7 · Human time budget is a first-class constraint（人类时间预算是硬约束）
+管理者 / Owner / 审批人 / 标注人的投入时间是**预先设定的预算**，不是事后算账。
+- 问：管理者每周多少小时？Owner 每天多少小时？预期会有多少 ESCALATE / 红线事件？算下来预算够吗？
+- 发现不够：必须回头调低自动化量 / 不能默认"人不够就加班"。
+
+### Layer 0 的验收标准
+进入 Layer 1 前，必须能回答以下 7 问。不能回答的先扣住，不进入后续 Socratic 追问：
+- [ ] HP-1：Gold Set 从哪来？冷启动规模多少？
+- [ ] HP-2：闸门分几级？每级的边界与超时策略？
+- [ ] HP-3：循环的每一步是否幂等？断点的补偿态存哪？
+- [ ] HP-4：改进粒度？观察期？回滚触发条件？
+- [ ] HP-5：有几级自动化？升级触发条件？
+- [ ] HP-6：资产版本化策略？
+- [ ] HP-7：每周 / 每日的人类时间预算？预算先列。
 
 ---
 
@@ -167,16 +223,21 @@ D. <方案 D 的一句话描述> — <优缺点>
 
 **警戒信号**：用户开始说"这个我还没想好，跟 XX 有关"，说明你问了一个**依赖未满足**的问题，立即回退到前置依赖项。
 
-### 3.3 一致性校验（每轮都做）
+### 3.3 一致性校验（每轮都做，共 4 项）
 
-在每次用户做完决策后，心里默默做这 3 项检查：
+在每次用户做完决策后，心里默默做这 **4 项**检查：
 
 1. **与方法论锚点的一致性**：新决策是否违背 Layer 1 的核心原则？
 2. **与先前决策的一致性**：是否和前面已锁定的决策矛盾？
 3. **与业务现实的一致性**：是否符合 Layer 1 的资源约束？
+4. **与 Layer 0 Harness Principles 的一致性**：新决策是否违反 HP-1~HP-7 中任何一条？特别关注：
+   - 这个决策让人类下场改代码了吗？（违 HP-2）
+   - 这个决策让某一步变得不幂等了吗？（违 HP-3）
+   - 这个决策让改进粒度变大或不可回滚了吗？（违 HP-4）
+   - 这个决策增加了人类时间成本但没加到预算里吗？（违 HP-7）
 
 **发现冲突时**：立即指出，不要装作没看见。例如：
-> "您刚才选了 B（管理者 2h/周），但之前又希望所有失败都走人工（可能产生 20+ 次/周审批）。这两个决策在规模上不匹配。建议：A. 降低人工介入比例 / B. 增加管理者投入到 5h/周 / C. 引入 Owner 分担"
+> "您刚才选了 B（管理者 2h/周），但之前又希望所有失败都走人工（可能产生 20+ 次/周审批）。这两个决策在规模上不匹配，且违反了 **HP-7（人类时间预算是硬约束）**。建议：A. 降低人工介入比例 / B. 增加管理者投入到 5h/周 / C. 引入 Owner 分担"
 
 ### 3.4 决策锁定表（看不见但在心里维护）
 
@@ -450,6 +511,15 @@ Proposed / Accepted / Deprecated / Superseded by ADR-YYY
 
 ## 自我检查清单
 
+**Layer 0 硬约束验收**（**本 skill 独有**，没确认之前不进入 Socratic）：
+- [ ] HP-1：Gold Set 来源明确？
+- [ ] HP-2：闸门分级 + 每级边界 + 超时策略明确？
+- [ ] HP-3：幂等性 + 断点恢复方案明确？
+- [ ] HP-4：改进粒度 + 观察期 + 回滚触发条件明确？
+- [ ] HP-5：自动化分档 + 升级路径明确？
+- [ ] HP-6：资产版本化策略明确？
+- [ ] HP-7：人类时间预算预设完毕且后续决策均在预算内？
+
 **Capture 阶段**：
 - [ ] 问了方法论锚点？
 - [ ] 确认了业务现状关键数字？
@@ -462,6 +532,7 @@ Proposed / Accepted / Deprecated / Superseded by ADR-YYY
 - [ ] 给了明确建议 + 理由？
 - [ ] 每 3 轮做了决策锁定回顾？
 - [ ] 在关键决策上扮演了魔鬼代言人？
+- [ ] 每轮做了 **4 项**一致性校验（含对 HP-1~HP-7 的检查）？
 
 **呈现阶段**：
 - [ ] 分节呈现让用户逐节 Approve？
@@ -480,13 +551,13 @@ Proposed / Accepted / Deprecated / Superseded by ADR-YYY
 
 | Skill | 定位 | 与本 skill 关系 |
 |-------|------|----------------|
-| **how-to-harness（本 skill）** | 从模糊想法到锁定设计，自给自足 | 主 skill |
-| `brainstorming` | 通用"先问再写"纪律 | 本 skill 已内化其核心，无需调用 |
+| **how-to-harness（本 skill）** | Harness 闭环 / 自优化系统的设计引导，自给自足 | 主 skill（仅限闭环场景）|
+| `brainstorming` | 通用"先问再写"纪律 | 本 skill 已内化核心，无需调用 |
 | `prd` | 按 Strict Schema 产出 PRD | 本 skill 已内化 PRD schema，无需调用 |
 | `skill-creator` | 创建/优化 skill | 正交关系，不冲突 |
 
 **为什么本 skill 要自给自足**：
-1. 完整方法论在一个 skill 内便于传授、演化、复盘
+1. 完整方法论（含 Layer 0 Harness 硬约束）在一个 skill 内便于传授、演化、复盘
 2. 依赖其他 skill 增加"调度失败"风险（对方 skill 未命中触发条件就链条断了）
 3. 内化允许**跨阶段引用**（Capture 阶段的决策在 Layer 4 书写阶段能直接使用）
 
@@ -494,15 +565,15 @@ Proposed / Accepted / Deprecated / Superseded by ADR-YYY
 
 ## 详细参考
 
-- [references/ralph-case-study.md](references/ralph-case-study.md) — 完整案例：从"想做个 AI 循环"推导出 Ralph Harness 方案
-- [references/decision-checklists.md](references/decision-checklists.md) — 不同系统类型的典型决策清单
-- [references/deliverables.md](references/deliverables.md) — 6 类产物的详细模板与选择指南
+- [references/ralph-case-study.md](references/ralph-case-study.md) — 完整案例：从"想做个 AI 循环"推导出 Ralph Harness 方案（**本 skill 最好的学习材料**）
+- [references/decision-checklists.md](references/decision-checklists.md) — Harness 循环类系统的硬性决策清单（基于 HP-1~HP-7 展开）
+- [references/deliverables.md](references/deliverables.md) — 6 类产物（PRD / Design Doc / RFC / Kickoff / ADR / One-Pager）的详细模板与选择指南
 
 ---
 
 ## 元原则（最后一句话）
 
-> **本 skill 最重要的不是让 Agent 更会"写"，而是让 Agent 更会"问"。**
+> **本 skill 最重要的不是让 Agent 更会"问"，而是让 Agent 在问得好的基础上再多一层——以 Harness 原则为尺子，拒绝违反领域硬约束的决策。**
 >
-> 因为**好问题 = 好决策 = 好产物（无论它是 PRD、RFC、Design Doc 还是别的）**。
-> 用户永远是决策的所有者，Agent 只是帮助用户把决策表达出来。
+> "好问题 + 领域判据 = 好决策 = 好产物"（无论最后产出的是 PRD、RFC、Design Doc 还是别的）。
+> 用户永远是决策的所有者，Agent 只是帮助用户把决策表达出来——并**在用户违反 Harness 原则时诚实指出**。
