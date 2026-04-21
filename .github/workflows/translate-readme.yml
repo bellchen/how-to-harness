@@ -1,0 +1,42 @@
+name: Auto Translate README
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+      - '.github/workflows/translate-readme.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    name: Translate README.md to other languages
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Auto Translate README
+        uses: Lin-jun-xiang/action-translate-readme@v1
+        with:
+          LANG: zh-CN
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and push translated README
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          if [ -n "$(git status --porcelain README.zh-CN.md)" ]; then
+            git add README.zh-CN.md
+            git commit -m "docs: auto-translate README to zh-CN [skip ci]"
+            git push
+          else
+            echo "No translation changes to commit."
+          fi
